@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Existencia de articulos</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand">Existencias de articulos</a>
+        </nav>
+    </header>
+    <div class="container" id="app">
+        <div class="form-group">
+            <label for="nameArticulo">Nombre del articulo</label>
+            <div class="input-group mb-3">
+                <input id="nameArticulo" class="form-control" type="text" aria-describedby="helpNameArticle" name="" placeholder="*NombreArticulo*">
+                <div class="input-group-append">
+                    <span class="btn btn-primary" type="button">Buscar</span>
+                </div>
+            </div>
+            <small class="form-text text-muted" id="helpNameArticle">Para la busqueda del articulo puede incluir los *</small>
+        </div>
+
+        <div v-if="!movil" style="overflow: auto;">
+            <table class="table table-light">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Articulo</th>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Relacion</th>
+                        <th>SubFamilia</th>
+                        <th>DescSubfamilia</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="aritculo in articulos">
+                        <td>{{aritculo.Articulo}}</td>
+                        <td>{{aritculo.CodigoBarras}}</td>
+                        <td>{{aritculo.Nombre}}</td>
+                        <td>{{aritculo.Relacion}}</td>
+                        <td>{{aritculo.Subfamilia}}</td>
+                        <td>{{aritculo.DescSubfamila}}</td>
+                        <td><button class="btn btn-success" type="button">Detalles</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div v-if="movil" v-for="articulo in articulos" class="card mb-3 container-gen" style="max-width: 800px; box-shadow: 2px 2px 2px #e6e6e6;">
+            <div class="row no-gutters">
+                <div class="col-md-4 text-center" id="container-image">
+                    <img src="./src/codigo.jpg" class="card-img mt-4 img-barcode" alt="" style="max-width: 200px;">
+                    <h6 class="font-weight-bold barcode">{{articulo.CodigoBarras}}</h6>
+                </div>
+                <div class="divider-v"></div>
+                <div class="col-md-8" id="container-data">
+                    <div class="card-body">
+                        <h5 class="card-title">Articulo: {{articulo.Articulo}}</h5>
+                        <p class="card-text">{{articulo.Nombre}}</p>
+                        <p class="card-text"><span class="font-weight-bold">Relacion:</span> {{articulo.Relacion}}</p>
+                        <p class="card-text"><span class="font-weight-bold">Subfamilia:</span> {{articulo.Subfamilia}}</p>
+                        <p class="card-text"><small class="text-muted"><span class="font-weight-bold">Descripcion:</span> {{articulo.DescSubfamila}}</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="./js/index.js"></script>
+
+    <script>
+        window.onresize = function(event) {
+            app.movil = app.isDiplayMovil();
+        }
+    </script>
+</body>
+</html>
