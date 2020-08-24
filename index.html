@@ -14,60 +14,84 @@
         </nav>
     </header>
     <div class="container" id="app">
-        <div class="form-group">
-            <label for="nameArticulo">Nombre del articulo</label>
-            <div class="input-group mb-3">
-                <input id="nameArticulo" class="form-control" type="text" aria-describedby="helpNameArticle" name="" placeholder="*NombreArticulo*">
-                <div class="input-group-append">
-                    <span class="btn btn-primary" type="button">Buscar</span>
-                </div>
-            </div>
-            <small class="form-text text-muted" id="helpNameArticle">Para la busqueda del articulo puede incluir los *</small>
-        </div>
-
-        <div v-if="!movil" style="overflow: auto;">
-            <table class="table table-light">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Articulo</th>
-                        <th>Codigo</th>
-                        <th>Nombre</th>
-                        <th>Relacion</th>
-                        <th>SubFamilia</th>
-                        <th>DescSubfamilia</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="aritculo in articulos">
-                        <td>{{aritculo.Articulo}}</td>
-                        <td>{{aritculo.CodigoBarras}}</td>
-                        <td>{{aritculo.Nombre}}</td>
-                        <td>{{aritculo.Relacion}}</td>
-                        <td>{{aritculo.Subfamilia}}</td>
-                        <td>{{aritculo.DescSubfamila}}</td>
-                        <td><button class="btn btn-success" type="button">Detalles</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div v-if="movil" v-for="articulo in articulos" class="card mb-3 container-gen" style="max-width: 800px; box-shadow: 2px 2px 2px #e6e6e6;">
-            <div class="row no-gutters">
-                <div class="col-md-4 text-center" id="container-image">
-                    <img src="./src/codigo.jpg" class="card-img mt-4 img-barcode" alt="" style="max-width: 200px;">
-                    <h6 class="font-weight-bold barcode">{{articulo.CodigoBarras}}</h6>
-                </div>
-                <div class="divider-v"></div>
-                <div class="col-md-8" id="container-data">
-                    <div class="card-body">
-                        <h5 class="card-title">{{articulo.Nombre}}</h5>
-                        <p class="card-text"><span class="font-weight-bold">Articulo:</span> {{articulo.Articulo}}</p>
-                        <p class="card-text"><span class="font-weight-bold">Relacion:</span> {{articulo.Relacion}}</p>
-                        <p class="card-text"><span class="font-weight-bold">Subfamilia:</span> {{articulo.Subfamilia}}</p>
-                        <p class="card-text"><small class="text-muted">{{articulo.DescSubfamila}}</small></p>
+        <div v-if="!showDetails">
+            <div class="form-group">
+                <label for="nameArticulo">Nombre del articulo</label>
+                <div class="input-group mb-3">
+                    <input id="nameArticulo" class="form-control" type="text" aria-describedby="helpNameArticle" name="" placeholder="*NombreArticulo*">
+                    <div class="input-group-append">
+                        <span class="btn btn-primary" type="button">Buscar</span>
                     </div>
                 </div>
+                <small class="form-text text-muted" id="helpNameArticle">Para la busqueda del articulo puede incluir los *</small>
+            </div>
+    
+            <div v-if="!movil" style="overflow: auto;">
+                <table class="table table-light">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Articulo</th>
+                            <th>Codigo</th>
+                            <th>Nombre</th>
+                            <th>Relacion</th>
+                            <th>SubFamilia</th>
+                            <th>DescSubfamilia</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="aritculo in articulos">
+                            <td>{{aritculo.Articulo}}</td>
+                            <td>{{aritculo.CodigoBarras}}</td>
+                            <td>{{aritculo.Nombre}}</td>
+                            <td>{{aritculo.Relacion}}</td>
+                            <td>{{aritculo.Subfamilia}}</td>
+                            <td>{{aritculo.DescSubfamila}}</td>
+                            <td><button class="btn btn-success" type="button">Detalles</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    
+            <a v-if="movil" v-for="articulo in articulos" @click="setUri(articulo.Uri)" href="./views/details.html" class="card mb-3 container-gen" style="max-width: 800px; box-shadow: 2px 2px 2px #e6e6e6;">
+                <div class="row no-gutters">
+                    <div class="col-md-4 text-center" id="container-image">
+                        <img src="./src/codigo.jpg" class="card-img mt-4 img-barcode" alt="" style="max-width: 200px;">
+                        <h6 class="font-weight-bold barcode">{{articulo.CodigoBarras}}</h6>
+                    </div>
+                    <div class="divider-v"></div>
+                    <div class="col-md-8" id="container-data">
+                        <div class="card-body">
+                            <h5 class="card-title">{{articulo.Nombre}}</h5>
+                            <p class="card-text"><span class="font-weight-bold">Articulo:</span> {{articulo.Articulo}}</p>
+                            <p class="card-text"><span class="font-weight-bold">Relacion:</span> {{articulo.Relacion}}</p>
+                            <p class="card-text"><span class="font-weight-bold">Subfamilia:</span> {{articulo.Subfamilia}}</p>
+                            <p class="card-text"><small class="text-muted">{{articulo.DescSubfamila}}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <div v-if="showDetails" id="detailsApp">
+            <button class="btn btn-dark mt-2" type="button" @click="backMain"> Regresar </button>
+            <div class="form-group mt-3">
+                <label for=""><span class="font-weight-bold">Articulo:</span> </label>
+            </div>
+            <div class="form-group mt-2">
+                <label for=""><span class="font-weight-bold">Nombre:</span> </label>
+            </div>
+            <div class="form-group mt-2">
+                <label for=""><span class="font-weight-bold">Relacion:</span> 10101010</label>
+            </div>
+            <div class="form-group mt-2">
+                <label for=""><span class="font-weight-bold">Existencia actual UC:</span> 10101010</label>
+            </div>
+            <div class="form-group mt-2">
+                <label for=""><span class="font-weight-bold">Stock30 UC:</span> 10101010</label>
+            </div>
+            <div class="form-group mt-2">
+                <label for=""><span class="font-weight-bold">Costo Existencia Actual:</span> 10101010</label>
             </div>
         </div>
 

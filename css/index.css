@@ -1,4 +1,5 @@
 .container-gen{
+    cursor: pointer;
     position: relative;
     border-left: 9px solid #00c4d6;
 }
