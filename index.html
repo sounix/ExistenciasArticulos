@@ -53,7 +53,7 @@
                 </table>
             </div>
     
-            <a v-if="movil" v-for="articulo in articulos" @click="setUri(articulo.Uri)" href="./views/details.html" class="card mb-3 container-gen" style="max-width: 800px; box-shadow: 2px 2px 2px #e6e6e6;">
+            <div v-if="movil" v-for="articulo in articulos" @click="setUri(articulo.Uri)" class="card mb-3 container-gen" style="max-width: 800px; box-shadow: 2px 2px 2px #e6e6e6;">
                 <div class="row no-gutters">
                     <div class="col-md-4 text-center" id="container-image">
                         <img src="./src/codigo.jpg" class="card-img mt-4 img-barcode" alt="" style="max-width: 200px;">
@@ -70,28 +70,138 @@
                         </div>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
         
         <div v-if="showDetails" id="detailsApp">
             <button class="btn btn-dark mt-2" type="button" @click="backMain"> Regresar </button>
             <div class="form-group mt-3">
-                <label for=""><span class="font-weight-bold">Articulo:</span> </label>
+                <label for="#"><span class="font-weight-bold">Articulo:</span> {{articulo.Articulo}}</label>
             </div>
             <div class="form-group mt-2">
-                <label for=""><span class="font-weight-bold">Nombre:</span> </label>
+                <label for="#"><span class="font-weight-bold">Nombre:</span> {{articulo.Nombre}}</label>
             </div>
             <div class="form-group mt-2">
-                <label for=""><span class="font-weight-bold">Relacion:</span> 10101010</label>
+                <label for="#"><span class="font-weight-bold">Relacion:</span> {{articulo.Relacion}}</label>
             </div>
             <div class="form-group mt-2">
-                <label for=""><span class="font-weight-bold">Existencia actual UC:</span> 10101010</label>
+                <label for="#"><span class="font-weight-bold">Existencia actual UC:</span> {{articulo.ExistActualUC}}</label>
             </div>
             <div class="form-group mt-2">
-                <label for=""><span class="font-weight-bold">Stock30 UC:</span> 10101010</label>
+                <label for="#"><span class="font-weight-bold">Stock30 UC:</span> {{articulo.Stock30UC}}</label>
             </div>
             <div class="form-group mt-2">
-                <label for=""><span class="font-weight-bold">Costo Existencia Actual:</span> 10101010</label>
+                <label for="#"><span class="font-weight-bold">Costo Existencia Actual:</span> {{articulo.CostoExistActual}}</label>
+            </div>
+
+            <div class="accordion" id="accordionExample">
+                <div v-for="sucursal in articulo.existencias" class="card">
+                    <div class="card-header bg-info" id="headingOne">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-right dropdown-toggle text-light" type="button" data-toggle="collapse" v-bind:data-target="'#'+namesSucursales[sucursal.sucursal]" aria-expanded="true" aria-controls="collapseOne">
+                                {{namesSucursales[sucursal.sucursal]}}
+                            </button>
+                        </h2>
+                    </div>
+                    <div v-bind:id="namesSucursales[sucursal.sucursal]" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Estado de la conexion:</span> {{sucursal.status}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1  mb-0">
+                                        <label for="#"><span class="font-weight-bold">Almacen:</span> {{sucursal.Almacen}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Tienda:</span> {{sucursal.Tienda}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Articulo:</span> {{sucursal.Articulo}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Codigo de Barras:</span> {{sucursal.CodigoBarras}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Nombre:</span> {{sucursal.Nombre}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Relacion:</span> {{sucursal.Relacion}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Existencia UV:</span> {{sucursal.ExistUV}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Existencia UC:</span> {{sucursal.ExistUC}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Costo Neto:</span> {{sucursal.CostoNet}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Costo Neto UC:</span> {{sucursal.CostoNetUC}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Costo Existencia:</span> {{sucursal.CostoExist}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1  mb-0">
+                                        <label for="#"><span class="font-weight-bold">Precio UNO:</span> {{sucursal.PrecioUNO}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Util UNO:</span> {{sucursal.UtilUNO}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Precio DOS:</span> {{sucursal.PrecioDOS}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Util DOS:</span> {{sucursal.UtilDOS}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Estatus:</span> {{sucursal.Estatus}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Stock30:</span> {{sucursal.Stock30}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Stock 30 UC:</span> {{sucursal.Stock30UC}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Subfamilia:</span> {{sucursal.Subfamilia}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Descripcion Sub:</span> {{sucursal.DescSubfamila}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                    <div class="form-group mt-1 mb-0">
+                                        <label for="#"><span class="font-weight-bold">Ultima Actualizacion:</span> {{sucursal.Updated}}</label>
+                                    </div>
+                                    <div class="divider-h"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -104,10 +214,8 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="./js/index.js"></script>
 
-    <script>
-        window.onresize = function(event) {
-            app.movil = app.isDiplayMovil();
-        }
+    <script> 
+        window.onresize = function(event) {app.movil = app.isDiplayMovil();}
     </script>
 </body>
 </html>
