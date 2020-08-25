@@ -40,14 +40,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="aritculo in articulos">
-                            <td>{{aritculo.Articulo}}</td>
-                            <td>{{aritculo.CodigoBarras}}</td>
-                            <td>{{aritculo.Nombre}}</td>
-                            <td>{{aritculo.Relacion}}</td>
-                            <td>{{aritculo.Subfamilia}}</td>
-                            <td>{{aritculo.DescSubfamila}}</td>
-                            <td><button class="btn btn-success" type="button">Detalles</button></td>
+                        <tr v-for="articulo in articulos">
+                            <td>{{articulo.Articulo}}</td>
+                            <td>{{articulo.CodigoBarras}}</td>
+                            <td>{{articulo.Nombre}}</td>
+                            <td>{{articulo.Relacion}}</td>
+                            <td>{{articulo.Subfamilia}}</td>
+                            <td>{{articulo.DescSubfamila}}</td>
+                            <td><button class="btn btn-success" type="button" @click="setUri(articulo.Uri)">Detalles</button></td>
                         </tr>
                     </tbody>
                 </table>
