@@ -14,16 +14,24 @@
         </nav>
     </header>
     <div class="container" id="app">
+        <div v-if="loading" id="loading">
+            <img src="./src/spinner.gif" alt="">
+        </div>
+
         <div v-if="!showDetails">
             <div class="form-group">
                 <label for="nameArticulo">Nombre del articulo</label>
                 <div class="input-group mb-3">
-                    <input id="nameArticulo" class="form-control" type="text" aria-describedby="helpNameArticle" name="" placeholder="*NombreArticulo*">
+                    <input id="nameArticulo" class="form-control" type="text" aria-describedby="helpNameArticle" name="" placeholder="*NombreArticulo*" v-model="textSearch">
                     <div class="input-group-append">
-                        <span class="btn btn-primary" type="button">Buscar</span>
+                        <span class="btn btn-primary" type="button" ref="btnSearch">Buscar</span>
                     </div>
                 </div>
                 <small class="form-text text-muted" id="helpNameArticle">Para la busqueda del articulo puede incluir los *</small>
+            </div>
+            
+            <div class="form-group mt-3">
+                <label for="#"><span class="font-weight-bold">Articulos encontrados:</span> {{finded}}</label>
             </div>
     
             <div v-if="!movil" style="overflow: auto;">
@@ -47,13 +55,13 @@
                             <td>{{articulo.Relacion}}</td>
                             <td>{{articulo.Subfamilia}}</td>
                             <td>{{articulo.DescSubfamila}}</td>
-                            <td><button class="btn btn-success" type="button" @click="setUri(articulo.Uri)">Detalles</button></td>
+                            <td><button class="btn btn-success" type="button" @click="getDetailsArticulo(articulo.Uri)">Detalles</button></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
     
-            <div v-if="movil" v-for="articulo in articulos" @click="setUri(articulo.Uri)" class="card mb-3 container-gen" style="max-width: 800px; box-shadow: 2px 2px 2px #e6e6e6;">
+            <div v-if="movil" v-for="articulo in articulos" @click="getDetailsArticulo(articulo.Uri)" class="card mb-3 container-gen" style="max-width: 800px; box-shadow: 2px 2px 2px #e6e6e6;">
                 <div class="row no-gutters">
                     <div class="col-md-4 text-center" id="container-image">
                         <img src="./src/codigo.jpg" class="card-img mt-4 img-barcode" alt="" style="max-width: 200px;">
@@ -213,6 +221,8 @@
     
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="./js/index.js"></script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script> 
         window.onresize = function(event) {app.movil = app.isDiplayMovil();}
