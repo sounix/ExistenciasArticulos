@@ -46,8 +46,8 @@ var app = new Vue({
         finded: 0,
         NumSearch: 0,
         /** Variables no publicas para conexiones**/
-        // urlApiExistencias: "",
-        // namesSucursales: {nameSuc1: "ZARAGOZA", nameSuc2: "VICTORIA", nameSuc3: "OLUTA", nameSuc4: "BODEGA", nameSuc5: "JALTIPAN"}
+        urlApiExistencias: "",
+        namesSucursales: {nameSuc1: "ZARAGOZA", nameSuc2: "VICTORIA", nameSuc3: "OLUTA", nameSuc4: "BODEGA", nameSuc5: "JALTIPAN"}
     },
     mounted: function(){
         this.movil = this.isDiplayMovil();
