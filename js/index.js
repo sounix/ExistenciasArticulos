@@ -44,13 +44,14 @@ var app = new Vue({
         loading: false,
         textSearch: "",
         finded: 0,
+        NumSearch: 0,
         /** Variables no publicas para conexiones**/
-        urlApiExistencias: "",
-        namesSucursales: {nameSuc1: "ZARAGOZA", nameSuc2: "VICTORIA", nameSuc3: "OLUTA", nameSuc4: "BODEGA", nameSuc5: "JALTIPAN"}
+        // urlApiExistencias: "",
+        // namesSucursales: {nameSuc1: "ZARAGOZA", nameSuc2: "VICTORIA", nameSuc3: "OLUTA", nameSuc4: "BODEGA", nameSuc5: "JALTIPAN"}
     },
     mounted: function(){
         this.movil = this.isDiplayMovil();
-        this.$refs.btnSearch.addEventListener("click", this.getArticulos)
+        this.$refs.btnSearch.addEventListener("click", this.getArticulos);
     },
     methods: {
         getArticulos: function() {
@@ -78,6 +79,7 @@ var app = new Vue({
                 instancia.articulo = response.data.data;
                 instancia.stopLoading();
                 instancia.showDetails = true;
+                instancia.NumSearch += 1;
             })
             .catch(function (error) {
                 instancia.articulo = {
@@ -111,6 +113,9 @@ var app = new Vue({
         },
         backMain: function() {
             this.showDetails = false;
+        },
+        goDetails: function() {
+            this.showDetails = true;
         }
     }
 });
