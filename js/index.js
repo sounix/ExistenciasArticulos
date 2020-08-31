@@ -20,6 +20,40 @@ var app = new Vue({
         this.$refs.btnSearch.addEventListener("click", this.getArticulos);
     },
     methods: {
+        roundTo: function(number, digits = 2) { //12411.95368 , 3
+            const stringNumber = number.toString();
+            const arrayDivision = stringNumber.split(".");
+            const lengthDivision = arrayDivision.length;
+            let rounded = "0.00";
+            let digitsString = "";
+            if (lengthDivision === 1) {
+                for (let index = 0; index < digits; index++) {
+                    digitsString += "0"
+                }
+                rounded = arrayDivision[0] + "." +digitsString;
+                return rounded;
+            }
+            if (digits === 0) {
+                rounded = Math.round(number);
+                return rounded;
+            }
+            digitsString = arrayDivision[1].slice(0, (digits - 1));
+            const digitToRound = parseInt(arrayDivision[1].slice(digits, (digits + 1)));
+            let digitRounded = -1;
+            if (digitToRound < 5) digitRounded = arrayDivision[1].slice((digits - 1), digits);
+            if (digitToRound >= 5) digitRounded = parseInt(arrayDivision[1].slice((digits - 1), digits))+1;
+            rounded = arrayDivision[0] + "." + digitsString + digitRounded;
+            return rounded;
+        },
+        parseToPorcent: function(value) { // 0.45
+            const stringValue = value.toString();
+            const arrayValue = stringValue.split(".");
+            return parseInt(arrayValue[1]);
+        },
+        count: function(anyObject) {
+            const length = (Object.keys(anyObject)).length;
+            return length;
+        },
         getArticulos: function() {
             this.startLoading();
             const instancia = this;
