@@ -24,7 +24,7 @@
                 <div class="input-group mb-3">
                     <input id="nameArticulo" class="form-control" type="text" aria-describedby="helpNameArticle" name="" placeholder="*NombreArticulo*" v-model="textSearch">
                     <div class="input-group-append">
-                        <span class="btn btn-primary" type="button" ref="btnSearch">Buscar</span>
+                        <span class="btn btn-primary" type="button" ref="btnSearch" @click="getArticulos()">Buscar</span>
                     </div>
                 </div>
                 <small class="form-text text-muted" id="helpNameArticle">Para la busqueda del articulo puede incluir los *</small>
@@ -32,7 +32,7 @@
 
             <button v-if="NumSearch > 0" class="btn btn-primary" type="button" @click="goDetails">Adelante >></button>
             
-            <div class="form-group mt-3">
+            <div v-if="NumSearchProducts > 0" class="alert alert-primary mt-3" role="alert">
                 <label for="#"><span class="font-weight-bold">Articulos encontrados:</span> {{finded}}</label>
             </div>
     
@@ -95,13 +95,13 @@
                 <label for="#"><span class="font-weight-bold">Relacion:</span> {{articulo.Relacion}}</label>
             </div>
             <div class="form-group mt-2">
-                <label for="#"><span class="font-weight-bold">Existencia actual UC:</span> {{articulo.ExistActualUC}}</label>
+                <label for="#"><span class="font-weight-bold">Existencia actual UC:</span> {{roundTo(articulo.ExistActualUC)}}</label>
             </div>
             <div class="form-group mt-2">
-                <label for="#"><span class="font-weight-bold">Stock30 UC:</span> {{articulo.Stock30UC}}</label>
+                <label for="#"><span class="font-weight-bold">Stock30 UC:</span> {{roundTo(articulo.Stock30UC)}}</label>
             </div>
             <div class="form-group mt-2">
-                <label for="#"><span class="font-weight-bold">Costo Existencia Actual:</span> {{articulo.CostoExistActual}}</label>
+                <label for="#"><span class="font-weight-bold">Costo Existencia Actual:</span> {{roundTo(articulo.CostoExistActual, 3)}}</label>
             </div>
 
             <div v-for="sucursal in articulo.existencias" class="card">
@@ -167,19 +167,19 @@
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1  mb-0">
-                                    <label for="#"><span class="font-weight-bold">Precio UNO:</span> {{sucursal.PrecioUNO}}</label>
+                                    <label for="#"><span class="font-weight-bold">Precio UNO:</span> {{roundTo(sucursal.PrecioUNO)}}</label>
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1 mb-0">
-                                    <label for="#"><span class="font-weight-bold">Utilidad UNO:</span> {{parseToPorcent(roundTo(sucursal.UtilUNO))}}%</label>
+                                    <label for="#"><span class="font-weight-bold">Utilidad UNO:</span> {{parseToPorcent(roundTo(sucursal.UtilUNO, 2, true))}}%</label>
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1 mb-0">
-                                    <label for="#"><span class="font-weight-bold">Precio DOS:</span> {{sucursal.PrecioDOS}}</label>
+                                    <label for="#"><span class="font-weight-bold">Precio DOS:</span> {{roundTo(sucursal.PrecioDOS)}}</label>
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1 mb-0">
-                                    <label for="#"><span class="font-weight-bold">Utilidad DOS:</span> {{parseToPorcent(roundTo(sucursal.UtilDOS))}}%</label>
+                                    <label for="#"><span class="font-weight-bold">Utilidad DOS:</span> {{parseToPorcent(roundTo(sucursal.UtilDOS, 2, true))}}%</label>
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1 mb-0">

@@ -11,22 +11,24 @@ var app = new Vue({
         textSearch: "",
         finded: 0,
         NumSearch: 0,
+        NumSearchProducts: 0,
         /** Variables no publicas para conexiones**/
         urlApiExistencias: "",
         namesSucursales: {nameSuc1: "ZARAGOZA", nameSuc2: "VICTORIA", nameSuc3: "OLUTA", nameSuc4: "BODEGA", nameSuc5: "JALTIPAN"}
     },
     mounted: function(){
         this.movil = this.isDiplayMovil();
-        this.$refs.btnSearch.addEventListener("click", this.getArticulos);
     },
     methods: {
-        roundTo: function(number, digits = 2) { //12411.95368 , 3
-            const stringNumber = number.toString();
+        roundTo: function(number, digits = 2, autoComplete = false) { //12411.95368 , 3, false
+            const stringNumber = (number === null || number === undefined) ? "0" : number.toString();
             const arrayDivision = stringNumber.split(".");
             const lengthDivision = arrayDivision.length;
             let rounded = "0.00";
             let digitsString = "";
             if (lengthDivision === 1) {
+                if (!autoComplete) return arrayDivision[0];
+
                 for (let index = 0; index < digits; index++) {
                     digitsString += "0"
                 }
@@ -38,10 +40,11 @@ var app = new Vue({
                 return rounded;
             }
             digitsString = arrayDivision[1].slice(0, (digits - 1));
-            const digitToRound = parseInt(arrayDivision[1].slice(digits, (digits + 1)));
+            let digitToRound = parseInt(arrayDivision[1].slice(digits, (digits + 1)));
+            if (isNaN(digitToRound)) digitToRound = 0;
             let digitRounded = -1;
             if (digitToRound < 5) digitRounded = arrayDivision[1].slice((digits - 1), digits);
-            if (digitToRound >= 5) digitRounded = parseInt(arrayDivision[1].slice((digits - 1), digits))+1;
+            if (digitToRound >= 5) digitRounded = parseInt(arrayDivision[1].slice((digits - 1), digits)) + 1;
             rounded = arrayDivision[0] + "." + digitsString + digitRounded;
             return rounded;
         },
@@ -62,11 +65,13 @@ var app = new Vue({
             .then(function (response) {
                 instancia.articulos = response.data.data;
                 instancia.stopLoading();
+                instancia.NumSearchProducts += 1;
                 instancia.finded = response.data.count;
             })
             .catch(function (error) {
                 instancia.articulos = [];
                 instancia.stopLoading();
+                instancia.NumSearchProducts += 1;
                 instancia.finded = 0;
                 console.log('Error: ' + error);
             }); 
