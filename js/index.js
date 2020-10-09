@@ -44,7 +44,8 @@ var app = new Vue({
             if (isNaN(digitToRound)) digitToRound = 0;
             let digitRounded = -1;
             if (digitToRound < 5) digitRounded = arrayDivision[1].slice((digits - 1), digits);
-            if (digitToRound >= 5) digitRounded = parseInt(arrayDivision[1].slice((digits - 1), digits)) + 1;
+            if (digitToRound >= 5 && digitToRound < 9) digitRounded = parseInt(arrayDivision[1].slice((digits - 1), digits)) + 1;
+            if (digitToRound == 9) digitRounded = 9;
             rounded = arrayDivision[0] + "." + digitsString + digitRounded;
             return rounded;
         },
@@ -58,6 +59,7 @@ var app = new Vue({
             return length;
         },
         getArticulos: function() {
+            if (this.textSearch.trim() === "") return;
             this.startLoading();
             const instancia = this;
             const urlConsulta = `${this.urlApiExistencias}${this.textSearch}`;
