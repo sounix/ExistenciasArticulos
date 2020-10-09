@@ -12,6 +12,8 @@ var app = new Vue({
         finded: 0,
         NumSearch: 0,
         NumSearchProducts: 0,
+        titleAlert: "Advertencia",
+        messageAlert: "",
         /** Variables no publicas para conexiones**/
         urlApiExistencias: "",
         namesSucursales: {nameSuc1: "ZARAGOZA", nameSuc2: "VICTORIA", nameSuc3: "OLUTA", nameSuc4: "BODEGA", nameSuc5: "JALTIPAN"}
@@ -20,6 +22,10 @@ var app = new Vue({
         this.movil = this.isDiplayMovil();
     },
     methods: {
+        showAlertDialog: function(message) {
+            this.messageAlert = message;
+            document.getElementById("btnAlert").click();
+        },
         roundTo: function(number, digits = 2, autoComplete = false) { //12411.95368 , 3, false
             const stringNumber = (number === null || number === undefined) ? "0" : number.toString();
             const arrayDivision = stringNumber.split(".");
@@ -59,12 +65,23 @@ var app = new Vue({
             return length;
         },
         getArticulos: function() {
-            if (this.textSearch.trim() === "") return;
+            if (this.textSearch.trim() === "") {
+                this.showAlertDialog("Campo de busqueda vacio");
+                return;
+            }
             this.startLoading();
             const instancia = this;
             const urlConsulta = `${this.urlApiExistencias}${this.textSearch}`;
             axios.get(urlConsulta)
             .then(function (response) {
+                if (response.data.data === null) {
+                    instancia.articulos = [];
+                    instancia.NumSearchProducts += 1;
+                    instancia.finded = 0;
+                    instancia.stopLoading();
+                    instancia.showAlertDialog("No hay conexion con la base de datos");
+                    return;
+                }
                 instancia.articulos = response.data.data;
                 instancia.stopLoading();
                 instancia.NumSearchProducts += 1;
@@ -75,6 +92,7 @@ var app = new Vue({
                 instancia.stopLoading();
                 instancia.NumSearchProducts += 1;
                 instancia.finded = 0;
+                instancia.showAlertDialog("Error inesperado: No hay conexion con el servidor");
                 console.log('Error: ' + error);
             }); 
         },
@@ -83,6 +101,13 @@ var app = new Vue({
             const instancia = this;
             axios.get(urlDetails)
             .then(function (response) {
+                if (response.data.data === null) {
+                    instancia.articulo = [];
+                    instancia.showDetails = true;
+                    instancia.stopLoading();
+                    instancia.showAlertDialog("No hay conexion con la base de datos");
+                    return;
+                }
                 instancia.articulo = response.data.data;
                 instancia.stopLoading();
                 instancia.showDetails = true;
@@ -100,6 +125,7 @@ var app = new Vue({
                 };
                 instancia.stopLoading();
                 instancia.showDetails = true;
+                instancia.showAlertDialog("Error inesperado: No hay conexion con el servidor");
                 console.log('Error: ' + error);
             });
         },
