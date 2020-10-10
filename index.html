@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label for="nameArticulo">Nombre del articulo</label>
                 <div class="input-group mb-3">
-                    <input id="nameArticulo" class="form-control" type="text" aria-describedby="helpNameArticle" name="" placeholder="*NombreArticulo*" v-model="textSearch">
+                    <input id="nameArticulo" class="form-control" type="text" aria-describedby="helpNameArticle" name="" placeholder="*NombreArticulo*" v-model="textSearch" v-on:keyup.enter="getArticulos()">
                     <div class="input-group-append">
                         <span class="btn btn-primary" type="button" ref="btnSearch" @click="getArticulos()">Buscar</span>
                     </div>
@@ -96,13 +96,13 @@
                 <label for="#"><span class="font-weight-bold">Relacion:</span> {{articulo.Relacion}}</label>
             </div>
             <div class="form-group mt-2">
-                <label for="#"><span class="font-weight-bold">Existencia actual UC:</span> {{roundTo(articulo.ExistActualUC)}}</label>
+                <label for="#"><span class="font-weight-bold">Existencia actual UC:</span> {{utils.roundTo(articulo.ExistActualUC)}}</label>
             </div>
             <div class="form-group mt-2">
-                <label for="#"><span class="font-weight-bold">Stock30 UC:</span> {{roundTo(articulo.Stock30UC)}}</label>
+                <label for="#"><span class="font-weight-bold">Stock30 UC:</span> {{utils.roundTo(articulo.Stock30UC)}}</label>
             </div>
             <div class="form-group mt-2">
-                <label for="#"><span class="font-weight-bold">Costo Existencia Actual:</span> {{roundTo(articulo.CostoExistActual, 3)}}</label>
+                <label for="#"><span class="font-weight-bold">Costo Existencia Actual:</span> {{utils.roundTo(articulo.CostoExistActual, 3)}}</label>
             </div>
 
             <div v-for="sucursal in articulo.existencias" class="card">
@@ -146,11 +146,11 @@
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1 mb-0">
-                                    <label for="#"><span class="font-weight-bold">Existencia UV:</span> {{roundTo(sucursal.ExistUV, 2)}}</label>
+                                    <label for="#"><span class="font-weight-bold">Existencia UV:</span> {{utils.roundTo(sucursal.ExistUV, 2)}}</label>
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1 mb-0">
-                                    <label for="#"><span class="font-weight-bold">Existencia UC:</span> {{roundTo(sucursal.ExistUC, 2)}}</label>
+                                    <label for="#"><span class="font-weight-bold">Existencia UC:</span> {{utils.roundTo(sucursal.ExistUC, 2)}}</label>
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1 mb-0">
@@ -164,23 +164,23 @@
                             </div>
                             <div class="col-sm">
                                 <div class="form-group mt-1 mb-0">
-                                    <label for="#"><span class="font-weight-bold">Costo Existencia:</span> {{roundTo(sucursal.CostoExist, 3)}}</label>
+                                    <label for="#"><span class="font-weight-bold">Costo Existencia:</span> {{utils.roundTo(sucursal.CostoExist, 3)}}</label>
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1  mb-0">
-                                    <label for="#"><span class="font-weight-bold">Precio UNO:</span> {{roundTo(sucursal.PrecioUNO)}}</label>
+                                    <label for="#"><span class="font-weight-bold">Precio UNO:</span> {{utils.roundTo(sucursal.PrecioUNO)}}</label>
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1 mb-0">
-                                    <label for="#"><span class="font-weight-bold">Utilidad UNO:</span> {{parseToPorcent(roundTo(sucursal.UtilUNO, 2, true))}}%</label>
+                                    <label for="#"><span class="font-weight-bold">Utilidad UNO:</span> {{parseToPorcent(utils.roundTo(sucursal.UtilUNO, 2, true))}}%</label>
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1 mb-0">
-                                    <label for="#"><span class="font-weight-bold">Precio DOS:</span> {{roundTo(sucursal.PrecioDOS)}}</label>
+                                    <label for="#"><span class="font-weight-bold">Precio DOS:</span> {{utils.roundTo(sucursal.PrecioDOS)}}</label>
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1 mb-0">
-                                    <label for="#"><span class="font-weight-bold">Utilidad DOS:</span> {{parseToPorcent(roundTo(sucursal.UtilDOS, 2, true))}}%</label>
+                                    <label for="#"><span class="font-weight-bold">Utilidad DOS:</span> {{parseToPorcent(utils.roundTo(sucursal.UtilDOS, 2, true))}}%</label>
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1 mb-0">
@@ -204,7 +204,7 @@
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1 mb-0">
-                                    <label for="#"><span class="font-weight-bold">Ultima Actualizacion:</span> {{sucursal.Updated}}</label>
+                                    <label for="#"><span class="font-weight-bold">Ultima Actualizacion:</span> {{utils.parseFecha(sucursal.Updated, true)}}</label>
                                 </div>
                                 <div class="divider-h"></div>
                             </div>
@@ -222,7 +222,7 @@
                                             Compra #{{(key*1)+1}}
                                         </div>
                                         <div class="form-group mt-2">
-                                            <label for="#"><span class="font-weight-bold">Fecha:</span> {{value.Fecha}}</label>
+                                            <label for="#"><span class="font-weight-bold">Fecha:</span> {{utils.parseFecha(value.Fecha)}}</label>
                                             <div class="divider-h"></div>
                                             <label for="#"><span class="font-weight-bold">NombreTercero:</span> {{value.NombreTercero}}</label>
                                             <div class="divider-h"></div>
@@ -230,7 +230,7 @@
                                             <div class="divider-h"></div>
                                             <label for="#"><span class="font-weight-bold">CostoUnitarioNetoUC:</span> {{value.CostoUnitarioNetoUC}}</label>
                                             <div class="divider-h"></div>
-                                            <label for="#"><span class="font-weight-bold">Updated:</span> {{value.Updated}}</label>
+                                            <label for="#"><span class="font-weight-bold">Updated:</span> {{utils.parseFecha(value.Updated, true)}}</label>
                                             <div class="divider-h"></div>
                                         </div>
                                     </div>
@@ -277,6 +277,8 @@
     <script src="./js/index.js"></script>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script src="./js/utils.js"></script>
 
     <script> 
         window.onresize = function(event) {app.movil = app.isDiplayMovil();}
