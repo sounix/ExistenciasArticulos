@@ -102,7 +102,7 @@
                 <label for="#"><span class="font-weight-bold">Stock30 UC:</span> {{utils.roundTo(articulo.Stock30UC)}}</label>
             </div>
             <div class="form-group mt-2">
-                <label for="#"><span class="font-weight-bold">Costo Existencia Actual:</span> {{utils.roundTo(articulo.CostoExistActual, 3)}}</label>
+                <label for="#"><span class="font-weight-bold">Costo Existencia Actual:</span> {{utils.aplyFormatNumeric(utils.roundTo(articulo.CostoExistActual, 3))}}</label>
             </div>
 
             <div v-for="sucursal in articulo.existencias" class="card">
@@ -164,11 +164,11 @@
                             </div>
                             <div class="col-sm">
                                 <div class="form-group mt-1 mb-0">
-                                    <label for="#"><span class="font-weight-bold">Costo Existencia:</span> {{utils.roundTo(sucursal.CostoExist, 3)}}</label>
+                                    <label for="#"><span class="font-weight-bold">Costo Existencia:</span> {{utils.aplyFormatNumeric(utils.roundTo(sucursal.CostoExist, 3))}}</label>
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1  mb-0">
-                                    <label for="#"><span class="font-weight-bold">Precio UNO:</span> {{utils.roundTo(sucursal.PrecioUNO)}}</label>
+                                    <label for="#"><span class="font-weight-bold">Precio UNO:</span> {{utils.aplyFormatNumeric(utils.roundTo(sucursal.PrecioUNO))}}</label>
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1 mb-0">
@@ -176,7 +176,7 @@
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1 mb-0">
-                                    <label for="#"><span class="font-weight-bold">Precio DOS:</span> {{utils.roundTo(sucursal.PrecioDOS)}}</label>
+                                    <label for="#"><span class="font-weight-bold">Precio DOS:</span> {{utils.aplyFormatNumeric(utils.roundTo(sucursal.PrecioDOS))}}</label>
                                 </div>
                                 <div class="divider-h"></div>
                                 <div class="form-group mt-1 mb-0">
