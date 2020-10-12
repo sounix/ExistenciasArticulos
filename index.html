@@ -210,7 +210,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm">
+                            <div v-if="namesSucursales[sucursal.sucursal] !== 'BODEGA'" class="col-sm">
                                 <div class="form-group mt-1 mb-0">
                                     <button class="btn btn-success btn-block dropdown-toggle" type="button" data-toggle="collapse" v-bind:data-target="'#'+namesSucursales[sucursal.sucursal]+'compras'" aria-expanded="true" aria-controls="collapseOne">
                                         Compras encontradas: {{count(sucursal.compras)}}
