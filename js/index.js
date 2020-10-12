@@ -15,8 +15,8 @@ var app = new Vue({
         titleAlert: "Advertencia",
         messageAlert: "",
         /** Variables no publicas para conexiones**/
-        urlApiExistencias: "",
-        namesSucursales: {nameSuc1: "ZARAGOZA", nameSuc2: "VICTORIA", nameSuc3: "OLUTA", nameSuc4: "BODEGA", nameSuc5: "JALTIPAN"}
+        urlApiExistencias: "https://api-spa-v2020.herokuapp.com/api/existencias/articulos?_nombre=",
+        namesSucursales: {"SPASUPERUNO.DYNDNS.ORG": "ZARAGOZA", "SPACENTRO.DYNDNS.ORG": "VICTORIA", "SPAOLUTA.DYNDNS.ORG": "OLUTA", "SPABODEGA.DYNDNS.ORG": "BODEGA", "SPAJALTIPAN.DYNDNS.ORG": "JALTIPAN"},
     },
     mounted: function(){
         this.movil = this.isDiplayMovil();
